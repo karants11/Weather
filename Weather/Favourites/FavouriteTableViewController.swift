@@ -25,6 +25,8 @@ class FavouriteTableViewController: UIViewController {
     
     @IBOutlet weak var removeAllContentButton: clearBackgroundWhiteFontButton!
     
+    @IBOutlet weak var emptyIndicatorText: whiteTextLableFont18!
+    
     var homeViewModel = HomeViewModel()
     var tableTitleVar = ""
     var currentPage: SegueIdentifiers = .favourites
@@ -42,7 +44,13 @@ class FavouriteTableViewController: UIViewController {
         self.cityWeatherList.rowHeight = 80
         
         self.tableTitle.text = tableTitleVar
-            
+        
+        if currentPage == .favourites {
+            self.totalNumberOfFavourites.text = String.favouriteListDisplay(favCount: self.homeViewModel.favCount)
+        }else if currentPage == .recentSearch {
+            self.totalNumberOfFavourites.text = String.recentListDisplay()
+        }
+        
         self.cityWeatherList.reloadData()
     }
     
@@ -59,8 +67,16 @@ class FavouriteTableViewController: UIViewController {
     @IBAction func removeAllFavourites(_ sender: Any) {
         
         if currentPage == .favourites {
-            self.homeViewModel.favourites.removeAll()
-            self.cityWeatherList.reloadData()
+            
+            let alert = UIAlertController(title: removeAllFavoritesAlertTitle, message: removeAllFavouritesAlertMessage, preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default) { action in
+                self.homeViewModel.favourites.removeAll()
+                self.cityWeatherList.reloadData()
+            })
+            self.present(alert, animated: true)
+            
         }else {
             self.homeViewModel.recentSearches.removeAll()
             self.cityWeatherList.reloadData()
@@ -98,7 +114,11 @@ class FavouriteTableViewController: UIViewController {
                 self.homeViewModel.removeCityFromFavourite(atIndex: indexPath.row)
             }
         }
-        
+        if currentPage == .favourites {
+            self.totalNumberOfFavourites.text = String.favouriteListDisplay(favCount: self.homeViewModel.favCount)
+        }else if currentPage == .recentSearch {
+            self.totalNumberOfFavourites.text = String.recentListDisplay()
+        }
         self.cityWeatherList.reloadData()
     }
     
@@ -125,7 +145,9 @@ extension FavouriteTableViewController: UITableViewDataSource {
         if currentPage == .favourites {
             if homeViewModel.favCount == 0 {
                 self.emptyImage.image = UIImage.emptyTableViewImage()
+                self.emptyIndicatorText.text = String.noFavourites()
                 self.emptyImage.isHidden = false
+                self.emptyIndicatorText.isHidden = false
                 self.totalNumberOfFavourites.isHidden = true
                 self.removeAllContentButton.isHidden = true
             }
@@ -133,7 +155,9 @@ extension FavouriteTableViewController: UITableViewDataSource {
         }else {
             if homeViewModel.recentSearchCount == 0 {
                 self.emptyImage.image = UIImage.emptyTableViewImage()
+                self.emptyIndicatorText.text = String.noRecentSearch()
                 self.emptyImage.isHidden = false
+                self.emptyIndicatorText.isHidden = false
                 self.totalNumberOfFavourites.isHidden = true
                 self.removeAllContentButton.isHidden = true
             }
@@ -184,6 +208,17 @@ extension FavouriteTableViewController: UITableViewDataSource {
         
 
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            if currentPage == .favourites {
+                self.homeViewModel.removeCityFromFavourite(atIndex: indexPath.row)
+            }else if currentPage == .recentSearch {
+                self.homeViewModel.recentSearches.remove(at: indexPath.row)
+            }
+            cityWeatherList.deleteRows(at: [indexPath], with: .fade)
+        }
     }
     
 }

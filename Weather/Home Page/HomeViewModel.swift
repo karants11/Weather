@@ -41,8 +41,15 @@ class HomeViewModel: WeatherReportParsedProtocol {
         if let weatherReport = weatherReports[ofCityName] {
             self.homeCityReport = weatherReport
         }else {
-            networkManager.fetchWeather(city: ofCityName)
+            networkManager.fetchWeather(url: String.urlFromCityName(cityName: ofCityName))
         }
+    }
+    
+    func fetchWeather(coordinates: Coordinates) {
+        networkManager.delegate = self
+        
+        networkManager.fetchWeather(url: String.urlFromCoordinates(coordinates: coordinates))
+        
     }
     
     func homeCityWeatherDetail(atIndex: Int) -> String {

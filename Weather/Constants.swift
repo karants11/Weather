@@ -19,3 +19,6 @@ enum TableViewTitle: String {
     case recentSearch = "Recent Search"
     case favourites = "Favourite"
 }
+
+let removeAllFavoritesAlertTitle: String = "Remove all"
+let removeAllFavouritesAlertMessage: String = "Are you sure you want to remove all your favourites?"

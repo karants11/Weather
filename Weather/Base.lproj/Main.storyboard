@@ -77,9 +77,9 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIv-Cz-8R3" customClass="cityNameCoustomLable" customModule="Weather" customModuleProvider="target">
-                                                            <rect key="frame" x="8" y="8" width="150" height="20"/>
+                                                            <rect key="frame" x="8" y="8" width="300" height="20"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="150" id="1mZ-Rv-kiF"/>
+                                                                <constraint firstAttribute="width" constant="300" id="1mZ-Rv-kiF"/>
                                                                 <constraint firstAttribute="height" constant="20" id="eUl-l9-PLB"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -203,6 +203,15 @@
                                     <constraint firstAttribute="width" constant="159" id="zBo-Sr-IJ6"/>
                                 </constraints>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGe-d5-hdL" customClass="whiteTextLableFont18" customModule="Weather" customModuleProvider="target">
+                                <rect key="frame" x="127.66666666666669" y="515" width="159" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="ZWF-ju-shz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epS-zC-e91" customClass="CoustomLabels" customModule="Weather" customModuleProvider="target">
                                 <rect key="frame" x="10" y="94" width="294" height="30"/>
                                 <constraints>
@@ -226,17 +235,21 @@
                             <constraint firstItem="epS-zC-e91" firstAttribute="leading" secondItem="gXM-oV-hv1" secondAttribute="leading" constant="10" id="LAp-2h-Jww"/>
                             <constraint firstItem="cOt-2f-sgq" firstAttribute="top" secondItem="CA0-cE-Z4N" secondAttribute="bottom" id="ZpU-JX-CIh"/>
                             <constraint firstItem="6u7-El-4As" firstAttribute="top" secondItem="epS-zC-e91" secondAttribute="bottom" id="b6u-Yw-lPy"/>
+                            <constraint firstItem="eGe-d5-hdL" firstAttribute="top" secondItem="Bam-oz-3gZ" secondAttribute="bottom" constant="25" id="eql-Zd-1NM"/>
                             <constraint firstItem="CA0-cE-Z4N" firstAttribute="leading" secondItem="gXM-oV-hv1" secondAttribute="leading" id="gZr-6N-BmJ"/>
                             <constraint firstItem="Bam-oz-3gZ" firstAttribute="centerX" secondItem="D2y-B1-oBN" secondAttribute="centerX" id="mxc-zI-ThA"/>
+                            <constraint firstItem="eGe-d5-hdL" firstAttribute="width" secondItem="Bam-oz-3gZ" secondAttribute="width" id="oHl-1j-RbL"/>
                             <constraint firstItem="gXM-oV-hv1" firstAttribute="bottom" secondItem="6u7-El-4As" secondAttribute="bottom" constant="10" id="qPR-yY-nzu"/>
                             <constraint firstItem="gXM-oV-hv1" firstAttribute="trailing" secondItem="cOt-2f-sgq" secondAttribute="trailing" constant="10" id="vlP-WC-x2K"/>
                             <constraint firstItem="6u7-El-4As" firstAttribute="leading" secondItem="gXM-oV-hv1" secondAttribute="leading" constant="10" id="vqU-xV-PQq"/>
+                            <constraint firstItem="eGe-d5-hdL" firstAttribute="centerX" secondItem="D2y-B1-oBN" secondAttribute="centerX" id="zz2-He-ui3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="S6S-AC-Wnb"/>
                     <connections>
                         <outlet property="cityWeatherList" destination="6u7-El-4As" id="FGy-3S-44N"/>
                         <outlet property="emptyImage" destination="Bam-oz-3gZ" id="DKS-ZU-WPw"/>
+                        <outlet property="emptyIndicatorText" destination="eGe-d5-hdL" id="q1K-gY-SlK"/>
                         <outlet property="removeAllContentButton" destination="cOt-2f-sgq" id="u6O-WQ-9pO"/>
                         <outlet property="tableTitle" destination="vhH-xu-scZ" id="Eps-F2-MEh"/>
                         <outlet property="totalNumberOfFavourites" destination="epS-zC-e91" id="y3V-kI-AvN"/>

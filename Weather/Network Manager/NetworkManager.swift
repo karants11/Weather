@@ -15,10 +15,10 @@ class NetworkManager {
     
     weak var delegate: WeatherReportParsedProtocol?
     
-    func fetchWeather(city: String) {
+    func fetchWeather(url: String) {
         
-
-        guard let weatherURL = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(city)&APPID=c08343e858ea297377f74323e8b5de03&units=metric") else {
+        
+        guard let weatherURL = URL(string: url) else {
             return
         }
         

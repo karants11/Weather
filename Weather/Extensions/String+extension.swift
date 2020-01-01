@@ -22,4 +22,22 @@ extension String {
     static func myApiId() -> String {
         return "c08343e858ea297377f74323e8b5de03"
     }
+    
+    static func favouriteListDisplay(favCount: Int) -> String {
+        return "\(favCount) City added as favourite"
+    }
+    
+    static func recentListDisplay() -> String {
+        return "You recently searched for"
+    }
+    
+    static func noRecentSearch() -> String {
+        return "No Recent Search"
+    }
+    
+    static func noFavourites() -> String {
+        return "No Favourites added"
+    }
+    
+        
 }

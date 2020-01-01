@@ -49,6 +49,14 @@ class blackTextLable: CoustomLabels {
     }
 }
 
+class whiteTextLableFont18: CoustomLabels {
+    override func personalizeLable() {
+        self.font = UIFont(name: "Roboto Regular", size: 18)
+        self.textColor = UIColor.white
+    }
+}
+
+
 class tavleViewTitleLable: CoustomLabels {
     override func personalizeLable() {
         self.font = UIFont(name: "Roboto Medium", size: 20)

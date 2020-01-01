@@ -37,19 +37,12 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
         // Do any additional setup after loading the view.
         
         self.view.backgroundColor = UIColor.backgroungColor()
-
-        //self.navigationController?.navigationBar.isHidden = true
-        //self.navigationController?.navigationBar.backgroundColor = .clear
         
-        weatherDiscriptionCollectionView.contentSize.width = 185
+        self.weatherDiscriptionCollectionView.contentSize.width = 185
         
         self.homeViewModel.delegate = self
         
-        let city = "Mangaluru"
-        homeViewModel.fetchWeather(ofCityName: city)
-        
         self.locationManager.requestWhenInUseAuthorization()
-
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -60,23 +53,14 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
-        
-        print("locations = \(locValue.latitude) \(locValue.longitude) location is being fetched")
+        let currentCoordinate: Coordinates = Coordinates(latitude: locValue.latitude, longitude: locValue.longitude)
+        self.homeViewModel.fetchWeather(coordinates: currentCoordinate)
     }
     
     @IBAction func hamburgerMenu(_ sender: Any) {
-        
         menuView.isHidden = false
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let pvc = storyboard.instantiateViewController(withIdentifier: "SubViewController") as! SubViewController
-//            pvc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-//            self.present(pvc, animated: true, completion: nil)
-        
     }
-    
-    
-    
+
     @IBAction func celeciusToFarenheit(_ sender: UISegmentedControl) {
         
         if sender.selectedSegmentIndex == 0 {
