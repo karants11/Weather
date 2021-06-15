@@ -38,7 +38,7 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
         
         self.view.backgroundColor = UIColor.backgroungColor()
 
-        self.navigationController?.navigationBar.isHidden = true
+        //self.navigationController?.navigationBar.isHidden = true
         //self.navigationController?.navigationBar.backgroundColor = .clear
         
         weatherDiscriptionCollectionView.contentSize.width = 185
@@ -85,7 +85,7 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
     
     
     @IBAction func favouriteButton(_ sender: Any) {
-
+        
     }
     
     @IBAction func recentSearch(_ sender: Any) {
@@ -94,34 +94,29 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
     
     @IBAction func favourite(_ sender: ToggleButton) {
         
-        if sender.isSelected {
+        if sender.isSelected == true {
             self.homeViewModel.addCurrentCityToFavourite()
         }else {
             self.homeViewModel.removeFromFavourite()
         }
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool{
-
-        if identifier == "RecentSearch" {
-            
-        }
-        
-        return true
-        
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? FavouriteTableViewController {
-            if segue.identifier == segueIdentifiers.recentSearch.rawValue {
-                
-                destinationViewController.navigationController?.title = tableViewTitle.recentSearch.rawValue
+            if segue.identifier == SegueIdentifiers.recentSearch.rawValue {
+                self.menuView.isHidden = true
+                destinationViewController.tableTitleVar = TableViewTitle.recentSearch.rawValue
+                destinationViewController.currentPage = .recentSearch
                 destinationViewController.homeViewModel = self.homeViewModel
+                
 
-            }else if segue.identifier == segueIdentifiers.favourites.rawValue {
-                
-                destinationViewController.navigationController?.title = tableViewTitle.favourites.rawValue
+            }else if segue.identifier == SegueIdentifiers.favourites.rawValue {
+                self.menuView.isHidden = true
+                destinationViewController.tableTitleVar = TableViewTitle.favourites.rawValue
+                destinationViewController.currentPage = .favourites
                 destinationViewController.homeViewModel = self.homeViewModel
+                
+
             }
         }
         
@@ -153,11 +148,12 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
             self.currentTemperature.text = String(Int(currentCity.temperature))
             self.weatherDiscription.text = currentCity.weatherDescription[0]
             self.dayDateTime.text = Date.currentDateAndTime()
+            self.weatherDiscriptionImage.image = UIImage.weatherDescribing(weatherCondition: currentCity.weatherDescription[0])
             
             if self.homeViewModel.isFavourite(cityName: currentCity.cityName) {
                 self.favouriteButton.isSelected = true
             }else {
-                self.favouriteButton.isSelected = true
+                self.favouriteButton.isSelected = false
             }
             
             self.isDataReady = true

@@ -23,6 +23,9 @@ class SearchPageViewController:UIViewController, UISearchBarDelegate, UITableVie
         self.searchResultTable.delegate = self
         self.searchResultTable.dataSource = self
         
+        self.searchResultTable.separatorStyle = .none
+        self.searchResultTable.rowHeight = 50
+        
         self.searchResultTable.reloadData()
         
     }
@@ -36,7 +39,9 @@ class SearchPageViewController:UIViewController, UISearchBarDelegate, UITableVie
         guard let city = searchBar.text else { return }
         
         homeViewModel.fetchWeather(ofCityName: city)
-        homeViewModel.addRecentSearch()
+        homeViewModel.addRecentSearch(cityName: city)
+        self.searchResultTable.reloadData()
+
         self.navigationController?.popViewController(animated: true)
         
         
@@ -50,7 +55,6 @@ class SearchPageViewController:UIViewController, UISearchBarDelegate, UITableVie
         if let cell = tableView.dequeueReusableCell(withIdentifier: "RecentSearchCell", for: indexPath) as? RecentSearchCell {
             let weatherReport = homeViewModel.fetchRecentSearchCity(atIndex: indexPath.row)
             cell.cityName.text = weatherReport.cityName
-            self.searchResultTable.reloadData()
         }
         
         return UITableViewCell()

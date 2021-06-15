@@ -32,4 +32,8 @@ extension UIColor {
     static func blackTextColor() -> UIColor {
         return UIColor.black
     }
+    
+    static func titleBackgroundColor() -> UIColor {
+        return UIColor(red: 41/225, green: 47/225, blue: 51/225, alpha: 1)
+    }
 }

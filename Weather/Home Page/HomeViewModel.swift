@@ -35,8 +35,14 @@ class HomeViewModel: WeatherReportParsedProtocol {
     var networkManager = NetworkManager()
     
     func fetchWeather(ofCityName: String) {
+        
         networkManager.delegate = self
-        networkManager.fetchWeather(city: ofCityName)
+        
+        if let weatherReport = weatherReports[ofCityName] {
+            self.homeCityReport = weatherReport
+        }else {
+            networkManager.fetchWeather(city: ofCityName)
+        }
     }
     
     func homeCityWeatherDetail(atIndex: Int) -> String {
@@ -44,9 +50,9 @@ class HomeViewModel: WeatherReportParsedProtocol {
         if atIndex >= 0 && atIndex < weatherDiscriptionArray.count {
             let cityReport = homeCityReport
             
-            let maxMinTemp = String("\(cityReport.minimumTemperature)" + "° - " + " \(cityReport.maximumTemperature)" + "°")
+            let maxMinTemp = String("\(Int(cityReport.minimumTemperature))" + "° - " + " \(Int(cityReport.maximumTemperature))" + "°")
             let humidity = String("\(cityReport.humidity)" + " %")
-            let pressure = String("\(cityReport.pressure)" + " psi")
+            let pressure = String("\(cityReport.pressure)" + " hpa")
             let discription = String("\(cityReport.weatherDescription[0])")
             let discriptionArray: [String] = [maxMinTemp, humidity, pressure, discription]
 
@@ -62,9 +68,6 @@ class HomeViewModel: WeatherReportParsedProtocol {
         self.homeCityReport = weatherReport
         self.weatherReports[homeCityReport.cityName] = weatherReport
 
-        
-        print(count)
-        
         self.delegate?.weatherReportRecieved()
     }
     
@@ -77,6 +80,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
     }
     
     func removeFromFavourite() {
+        
         let city: String = homeCityReport.cityName
         if favourites.contains(city) {
             guard let removeIndex = favourites.firstIndex(of: city) else { return }
@@ -85,7 +89,15 @@ class HomeViewModel: WeatherReportParsedProtocol {
         }
     }
     
+    func removeCityFromFavourite(atIndex: Int) {
+        
+        if atIndex >= 0 && atIndex < favCount {
+            favourites.remove(at: atIndex)
+        }
+    }
+    
     func fetchFavouriteCity(atIndex: Int) -> WeatherReport {
+        
         var cityWeatherReport = WeatherReport()
         if atIndex >= 0 && atIndex < favCount {
             let cityName = favourites[atIndex]
@@ -97,6 +109,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
     }
     
     func isFavourite(cityName: String) -> Bool {
+        
         if favourites.contains(cityName) {
             return true
         }else {
@@ -104,11 +117,11 @@ class HomeViewModel: WeatherReportParsedProtocol {
         }
     }
     
-    func addRecentSearch() {
-        let city: String = homeCityReport.cityName
+    func addRecentSearch(cityName: String) {
+        
+        let city: String = cityName
         if !recentSearches.contains(city) {
             recentSearches.append(city)
-            //print(favCount)
         }
     }
     
@@ -122,6 +135,16 @@ class HomeViewModel: WeatherReportParsedProtocol {
             }
         }
         return cityWeatherReport
+    }
+    
+    func addRecentToFavourite(ofIndex: Int) {
+        
+        if ofIndex >= 0 && ofIndex < recentSearchCount {
+            let city: String = recentSearches[ofIndex]
+            if !favourites.contains(city) {
+                favourites.append(city)
+            }
+        }
     }
     
 }

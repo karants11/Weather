@@ -10,12 +10,12 @@ import UIKit
 let weatherDiscriptionArray = ["Max-Min", "Humidity", "Pressure", "Discription"]
 let weatherDiscriptionImageArray = [UIImage(named: "temperature"), UIImage(named: "humidity"), UIImage(named: "pressure"),UIImage(named: "slightrain")]
 
-enum segueIdentifiers: String {
+enum SegueIdentifiers: String {
     case recentSearch = "RecentSearch"
     case favourites = "favourites"
 }
 
-enum tableViewTitle: String {
+enum TableViewTitle: String {
     case recentSearch = "Recent Search"
     case favourites = "Favourite"
 }
