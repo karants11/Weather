@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol FavouriteCheckProtocol: AnyObject {
+    func isHomePageContentFavourite()
+}
+
 class FavouriteTableViewController: UIViewController {
+    
+    weak var delegate: FavouriteCheckProtocol?
     
     @IBOutlet weak var cityWeatherList: UITableView!
     
@@ -42,6 +48,7 @@ class FavouriteTableViewController: UIViewController {
     
     
     @IBAction func backButton(_ sender: Any) {
+        self.delegate?.isHomePageContentFavourite()
         self.navigationController?.popViewController(animated: true)
     }
     

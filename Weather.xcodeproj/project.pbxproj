@@ -31,6 +31,7 @@
 		F4EEE87B267869FB009E48E0 /* LoacationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE87A267869FB009E48E0 /* LoacationManager.swift */; };
 		F4EEE88226786ED5009E48E0 /* CoustomLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE88126786ED5009E48E0 /* CoustomLabels.swift */; };
 		F4EEE88526788D1F009E48E0 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE88426788D1F009E48E0 /* UIImage+Extension.swift */; };
+		F4EEE88D2679B4F9009E48E0 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE88C2679B4F9009E48E0 /* String+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		F4EEE87A267869FB009E48E0 /* LoacationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoacationManager.swift; sourceTree = "<group>"; };
 		F4EEE88126786ED5009E48E0 /* CoustomLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoustomLabels.swift; sourceTree = "<group>"; };
 		F4EEE88426788D1F009E48E0 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		F4EEE88C2679B4F9009E48E0 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			children = (
 				F4EEE82E2671EEE0009E48E0 /* UIColor+extension.swift */,
 				F4EEE88426788D1F009E48E0 /* UIImage+Extension.swift */,
+				F4EEE88C2679B4F9009E48E0 /* String+extension.swift */,
 				F4EEE86A2677DBFA009E48E0 /* Date+Extension.swift */,
 			);
 			path = Extensions;
@@ -245,6 +248,7 @@
 				F4EEE85E26775B56009E48E0 /* FavouriteTableViewController.swift in Sources */,
 				F4EEE8422675BFF1009E48E0 /* ToggleButton.swift in Sources */,
 				F4EEE83F267479BA009E48E0 /* NetworkManager.swift in Sources */,
+				F4EEE88D2679B4F9009E48E0 /* String+extension.swift in Sources */,
 				F4EEE81C2671D5F5009E48E0 /* HomeViewController.swift in Sources */,
 				F4EEE86B2677DBFA009E48E0 /* Date+Extension.swift in Sources */,
 				F4EEE88526788D1F009E48E0 /* UIImage+Extension.swift in Sources */,

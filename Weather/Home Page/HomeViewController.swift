@@ -9,12 +9,12 @@ import UIKit
 import CoreLocation
 
 
-class HomeViewController: UIViewController, WeatherDataProtocol {
+class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManagerDelegate {
 
     let homeViewModel = HomeViewModel()
-    
+    let locationManager = CLLocationManager()
+
     var isDataReady: Bool = false
-    
     
     @IBOutlet weak var favouriteButton: ToggleButton!
     
@@ -44,12 +44,24 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
         weatherDiscriptionCollectionView.contentSize.width = 185
         
         self.homeViewModel.delegate = self
-
+        
         let city = "Mangaluru"
         homeViewModel.fetchWeather(ofCityName: city)
         
+        self.locationManager.requestWhenInUseAuthorization()
 
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
+        
+        print("locations = \(locValue.latitude) \(locValue.longitude) location is being fetched")
     }
     
     @IBAction func hamburgerMenu(_ sender: Any) {
@@ -103,6 +115,7 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? FavouriteTableViewController {
+            destinationViewController.delegate = self
             if segue.identifier == SegueIdentifiers.recentSearch.rawValue {
                 self.menuView.isHidden = true
                 destinationViewController.tableTitleVar = TableViewTitle.recentSearch.rawValue
@@ -116,7 +129,6 @@ class HomeViewController: UIViewController, WeatherDataProtocol {
                 destinationViewController.currentPage = .favourites
                 destinationViewController.homeViewModel = self.homeViewModel
                 
-
             }
         }
         
@@ -191,4 +203,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         } 
     }
 
+}
+
+extension HomeViewController: FavouriteCheckProtocol {
+    func isHomePageContentFavourite() {
+        if !self.homeViewModel.isFavourite(cityName: self.homeViewModel.homeCityReport.cityName) {
+            self.favouriteButton.isSelected = false
+        }
+    }
+    
+    
 }

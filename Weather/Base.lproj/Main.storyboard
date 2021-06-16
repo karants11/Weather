@@ -92,10 +92,12 @@
                                                                 <constraint firstAttribute="height" constant="17" id="MLs-Rn-p8C"/>
                                                                 <constraint firstAttribute="width" constant="18" id="pa7-mn-Kez"/>
                                                             </constraints>
-                                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" title="fav">
                                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="favouriteButton:" destination="2CS-6i-Qb9" eventType="touchUpInside" id="Vby-c3-Njb"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
@@ -183,10 +185,11 @@
                                     <constraint firstAttribute="height" constant="50" id="ze5-ed-TfE"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOt-2f-sgq" customClass="clearBackgroundWhiteFontButton" customModule="Weather" customModuleProvider="target">
-                                <rect key="frame" x="328" y="94" width="76" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOt-2f-sgq" customClass="clearBackgroundWhiteFontButton" customModule="Weather" customModuleProvider="target">
+                                <rect key="frame" x="304" y="94" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="R3b-Ly-h3Q"/>
+                                    <constraint firstAttribute="width" constant="100" id="zfM-jb-vpn"/>
                                 </constraints>
                                 <state key="normal" title="Remove All"/>
                                 <connections>
@@ -200,9 +203,11 @@
                                     <constraint firstAttribute="width" constant="159" id="zBo-Sr-IJ6"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epS-zC-e91">
-                                <rect key="frame" x="10" y="89" width="310" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="epS-zC-e91" customClass="CoustomLabels" customModule="Weather" customModuleProvider="target">
+                                <rect key="frame" x="10" y="94" width="294" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="kHr-cY-yG9"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -213,10 +218,14 @@
                         <constraints>
                             <constraint firstItem="6u7-El-4As" firstAttribute="top" secondItem="cOt-2f-sgq" secondAttribute="bottom" id="5UA-jC-v5X"/>
                             <constraint firstItem="gXM-oV-hv1" firstAttribute="trailing" secondItem="CA0-cE-Z4N" secondAttribute="trailing" id="6Ad-K1-FGS"/>
+                            <constraint firstItem="cOt-2f-sgq" firstAttribute="leading" secondItem="epS-zC-e91" secondAttribute="trailing" id="9tR-Og-G3j"/>
                             <constraint firstItem="gXM-oV-hv1" firstAttribute="trailing" secondItem="6u7-El-4As" secondAttribute="trailing" constant="10" id="As0-t1-L6q"/>
                             <constraint firstItem="Bam-oz-3gZ" firstAttribute="centerY" secondItem="D2y-B1-oBN" secondAttribute="centerY" id="BUF-kG-tQa"/>
+                            <constraint firstItem="epS-zC-e91" firstAttribute="top" secondItem="CA0-cE-Z4N" secondAttribute="bottom" id="C37-tv-GXj"/>
                             <constraint firstItem="CA0-cE-Z4N" firstAttribute="top" secondItem="gXM-oV-hv1" secondAttribute="top" id="CGS-hm-BL9"/>
+                            <constraint firstItem="epS-zC-e91" firstAttribute="leading" secondItem="gXM-oV-hv1" secondAttribute="leading" constant="10" id="LAp-2h-Jww"/>
                             <constraint firstItem="cOt-2f-sgq" firstAttribute="top" secondItem="CA0-cE-Z4N" secondAttribute="bottom" id="ZpU-JX-CIh"/>
+                            <constraint firstItem="6u7-El-4As" firstAttribute="top" secondItem="epS-zC-e91" secondAttribute="bottom" id="b6u-Yw-lPy"/>
                             <constraint firstItem="CA0-cE-Z4N" firstAttribute="leading" secondItem="gXM-oV-hv1" secondAttribute="leading" id="gZr-6N-BmJ"/>
                             <constraint firstItem="Bam-oz-3gZ" firstAttribute="centerX" secondItem="D2y-B1-oBN" secondAttribute="centerX" id="mxc-zI-ThA"/>
                             <constraint firstItem="gXM-oV-hv1" firstAttribute="bottom" secondItem="6u7-El-4As" secondAttribute="bottom" constant="10" id="qPR-yY-nzu"/>
@@ -228,7 +237,9 @@
                     <connections>
                         <outlet property="cityWeatherList" destination="6u7-El-4As" id="FGy-3S-44N"/>
                         <outlet property="emptyImage" destination="Bam-oz-3gZ" id="DKS-ZU-WPw"/>
+                        <outlet property="removeAllContentButton" destination="cOt-2f-sgq" id="u6O-WQ-9pO"/>
                         <outlet property="tableTitle" destination="vhH-xu-scZ" id="Eps-F2-MEh"/>
+                        <outlet property="totalNumberOfFavourites" destination="epS-zC-e91" id="y3V-kI-AvN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Di-6P-nzq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -316,7 +327,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add to favourite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIs-al-D4a">
                                                         <rect key="frame" x="27" y="6" width="108" height="18"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="108" id="A2a-9n-rcg"/>
+                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="108" id="A2a-9n-rcg"/>
                                                             <constraint firstAttribute="height" constant="18" id="kye-WT-77F"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="15"/>

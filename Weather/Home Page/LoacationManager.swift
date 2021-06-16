@@ -36,54 +36,61 @@ class LoacationManager: NSObject, CLLocationManagerDelegate {
         self.currentCoordinates.longitude = locValue.longitude
     }
     
-    func setUsersClosestCity(latitude: Double, longitude: Double)
-    {
-        let geoCoder = CLGeocoder()
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        geoCoder.reverseGeocodeLocation(location)
-        {
-            (placemarks, error) -> Void in
-
-            let placeArray = placemarks as [CLPlacemark]?
-
-            // Place details
-            var placeMark: CLPlacemark!
-            placeMark = placeArray?[0]
-
-            // Address dictionary
-            //print(placeMark.addressDictionary)
-
-            // Location name
-            if let locationName = placeMark.addressDictionary?["Name"] as? NSString
-            {
-               // print(locationName)
-            }
-
-            // Street address
-            if let street = placeMark.addressDictionary?["Thoroughfare"] as? NSString
-            {
-                //print(street)
-            }
-
-            // City
-            if let city = placeMark.addressDictionary?["City"] as? NSString
-            {
-                print(city)
-            }
-
-            // Zip code
-            if let state = placeMark.addressDictionary?["State"] as? NSString
-            {
-                print(state)
-            }
-
-            // Country
-            if let country = placeMark.addressDictionary?["Country"] as? NSString
-            {
-                print(country)
-            }
-        }
+    
+    func currentLocation() -> Coordinates {
+        self.locationManager
+        print("latitude: \(currentCoordinates.latitude), longitude: \(currentCoordinates.longitude)")
+        return currentCoordinates
     }
+    
+//    func setUsersClosestCity(latitude: Double, longitude: Double)
+//    {
+//        let geoCoder = CLGeocoder()
+//        let location = CLLocation(latitude: latitude, longitude: longitude)
+//        geoCoder.reverseGeocodeLocation(location)
+//        {
+//            (placemarks, error) -> Void in
+//
+//            let placeArray = placemarks as [CLPlacemark]?
+//
+//            // Place details
+//            var placeMark: CLPlacemark!
+//            placeMark = placeArray?[0]
+//
+//            // Address dictionary
+//            //print(placeMark.addressDictionary)
+//
+//            // Location name
+//            if let locationName = placeMark.addressDictionary?["Name"] as? NSString
+//            {
+//               // print(locationName)
+//            }
+//
+//            // Street address
+//            if let street = placeMark.addressDictionary?["Thoroughfare"] as? NSString
+//            {
+//                //print(street)
+//            }
+//
+//            // City
+//            if let city = placeMark.addressDictionary?["City"] as? NSString
+//            {
+//                print(city)
+//            }
+//
+//            // Zip code
+//            if let state = placeMark.addressDictionary?["State"] as? NSString
+//            {
+//                print(state)
+//            }
+//
+//            // Country
+//            if let country = placeMark.addressDictionary?["Country"] as? NSString
+//            {
+//                print(country)
+//            }
+//        }
+//    }
     
     
     
