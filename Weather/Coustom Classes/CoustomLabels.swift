@@ -28,6 +28,16 @@ class CoustomLabels: UILabel {
         
 }
 
+extension CoustomLabels {
+    func addCharacterSpacing(kernValue: Double = 1.15) {
+    if let labelText = text, labelText.count > 0 {
+      let attributedString = NSMutableAttributedString(string: labelText)
+        attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length - 1))
+      attributedText = attributedString
+    }
+  }
+}
+
 class temperatureCoustomLable: CoustomLabels {
     override func personalizeLable() {
         self.font = UIFont(name: "Roboto Medium", size: 18)
@@ -61,5 +71,13 @@ class tavleViewTitleLable: CoustomLabels {
     override func personalizeLable() {
         self.font = UIFont(name: "Roboto Medium", size: 20)
         self.textColor = UIColor.titleBackgroundColor()
+    }
+}
+
+class dateLable: CoustomLabels {
+    override func personalizeLable() {
+        self.font = UIFont(name: "Roboto Regular", size: 13)
+        self.textColor = UIColor.white.withAlphaComponent(0.6)
+        self.addCharacterSpacing(kernValue: 1.5)
     }
 }

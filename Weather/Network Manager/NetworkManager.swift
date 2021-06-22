@@ -91,7 +91,9 @@ class NetworkManager {
            let latitude = coordinates["lat"] as? Double,
            let longitude = coordinates["lon"] as? Double{
             
-            finalWeatherReport = WeatherReport(cityName: name, temperature: temperature, minimumTemperature: minimumTemperature, maximumTemperature: maximumTemperature, weatherDescription: [String](), pressure: pressure, humidity: humidity, latitude: latitude, longitude: longitude)
+            let currentTime = Date()
+            
+            finalWeatherReport = WeatherReport(cityName: name, temperature: temperature, minimumTemperature: minimumTemperature, maximumTemperature: maximumTemperature, weatherDescription: [String](), pressure: pressure, humidity: humidity, latitude: latitude, longitude: longitude, storedTime: currentTime)
             
             var finalWeatherDescription = [String]()
             if let weathers = weatherReport["weather"] as? [[String : Any]] {

@@ -17,6 +17,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
     var homeCityReport = WeatherReport()
     var favourites = [String]()
     var recentSearches = [String]()
+    var filterdList = [String]()
     
     weak var delegate: WeatherDataProtocol?
     
@@ -32,13 +33,17 @@ class HomeViewModel: WeatherReportParsedProtocol {
         return recentSearches.count
     }
     
+    var filteredListCount: Int {
+        return filterdList.count
+    }
+    
     var networkManager = NetworkManager()
     
     func fetchWeather(ofCityName: String) {
         
         networkManager.delegate = self
         
-        if let weatherReport = weatherReports[ofCityName] {
+        if let weatherReport = weatherReports[ofCityName], (Int.getDateDiff(start: weatherReport.storedTime, end: Date()) <= 30) {
             self.homeCityReport = weatherReport
         }else {
             networkManager.fetchWeather(url: String.urlFromCityName(cityName: ofCityName))
@@ -117,11 +122,8 @@ class HomeViewModel: WeatherReportParsedProtocol {
     
     func isFavourite(cityName: String) -> Bool {
         
-        if favourites.contains(cityName) {
-            return true
-        }else {
-            return false
-        }
+        return favourites.contains(cityName)
+         
     }
     
     func addRecentSearch(cityName: String) {

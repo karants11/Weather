@@ -12,9 +12,9 @@ extension Date
     static func currentDateAndTime() -> String {
         let date = Date()
         let df = DateFormatter()
-        df.dateFormat = "EEEE dd/MM/yyyy HH:mm"
+        df.dateFormat = "E, d MMM yyy h:mm a"//"EEEE dd/MM/yyyy HH:mm"
         let dateString = df.string(from: date)
         
-        return dateString
+        return dateString.uppercased()
     }
 }

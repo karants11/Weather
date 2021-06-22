@@ -17,8 +17,9 @@ class WeatherReport {
     var pressure: Int
     var humidity: Int
     var coordinates: Coordinates
+    var storedTime: Date
     
-    init(cityName: String, temperature: Double, minimumTemperature: Double, maximumTemperature: Double, weatherDescription: [String], pressure: Int, humidity: Int, latitude: Double, longitude: Double) {
+    init(cityName: String, temperature: Double, minimumTemperature: Double, maximumTemperature: Double, weatherDescription: [String], pressure: Int, humidity: Int, latitude: Double, longitude: Double, storedTime: Date) {
         
         self.cityName = cityName
         self.temperature = temperature
@@ -28,6 +29,7 @@ class WeatherReport {
         self.pressure = pressure
         self.humidity = humidity
         self.coordinates = Coordinates(latitude: latitude, longitude: longitude)
+        self.storedTime = storedTime
     }
     
     init() {
@@ -39,5 +41,6 @@ class WeatherReport {
         self.pressure = 0
         self.humidity = 0
         self.coordinates = Coordinates(latitude: 0, longitude: 0)
+        self.storedTime = Date()
     }
 }

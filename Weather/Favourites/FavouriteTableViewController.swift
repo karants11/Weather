@@ -9,15 +9,20 @@ import UIKit
 
 protocol FavouriteCheckProtocol: AnyObject {
     func isHomePageContentFavourite()
+    func reloadHomePageData()
 }
 
 class FavouriteTableViewController: UIViewController {
     
     weak var delegate: FavouriteCheckProtocol?
     
+    var isSearching: Bool = false
+    
     @IBOutlet weak var cityWeatherList: UITableView!
     
     @IBOutlet weak var tableTitle: tavleViewTitleLable!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var emptyImage: UIImageView!
     
@@ -34,9 +39,11 @@ class FavouriteTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cityWeatherList.delegate = self
-        cityWeatherList.dataSource = self
+        self.cityWeatherList.delegate = self
+        self.cityWeatherList.dataSource = self
+        self.searchBar.delegate = self
         
+        self.searchBar.isHidden = true
         self.view.backgroundColor = UIColor.backgroungColor()
         self.cityWeatherList.backgroundColor = UIColor.clear
 
@@ -46,8 +53,11 @@ class FavouriteTableViewController: UIViewController {
         self.tableTitle.text = tableTitleVar
         
         if currentPage == .favourites {
+            self.homeViewModel.filterdList = self.homeViewModel.favourites
             self.totalNumberOfFavourites.text = String.favouriteListDisplay(favCount: self.homeViewModel.favCount)
+            
         }else if currentPage == .recentSearch {
+            self.homeViewModel.filterdList = self.homeViewModel.recentSearches
             self.totalNumberOfFavourites.text = String.recentListDisplay()
         }
         
@@ -61,9 +71,6 @@ class FavouriteTableViewController: UIViewController {
     }
     
     
-    @IBAction func searchButton(_ sender: Any) {
-    }
-    
     @IBAction func removeAllFavourites(_ sender: Any) {
         
         if currentPage == .favourites {
@@ -72,17 +79,20 @@ class FavouriteTableViewController: UIViewController {
 
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default) { action in
+                //self.homeViewModel.filterdList.removeAll()  ///////////// <-------------
                 self.homeViewModel.favourites.removeAll()
                 self.cityWeatherList.reloadData()
             })
             self.present(alert, animated: true)
             
         }else {
+            //self.homeViewModel.filterdList.removeAll()  ///////////// <-------------
             self.homeViewModel.recentSearches.removeAll()
             self.cityWeatherList.reloadData()
         }
 
     }
+    
     @IBAction func favouriteButton(_ sender: ToggleButton) {
         var superview = sender.superview
         while let view = superview, !(view is UITableViewCell) {
@@ -122,6 +132,18 @@ class FavouriteTableViewController: UIViewController {
         self.cityWeatherList.reloadData()
     }
     
+    @IBAction func searchButton(_ sender: Any) {
+        self.tableTitle.isHidden = !self.tableTitle.isHidden
+        self.searchBar.isHidden = !self.searchBar.isHidden
+    }
+    
+    @IBAction func viewTapped(_ sender: Any) {
+        self.searchBar.isHidden = true
+        self.tableTitle.isHidden = false
+        
+    }
+    
+    
 
 }
 
@@ -129,8 +151,16 @@ extension FavouriteTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // called whenever any cell is clicked
         // indexPath gives (coloumn, row) of the cell being clicked
+        if currentPage == .favourites {
+            self.homeViewModel.homeCityReport = self.homeViewModel.fetchFavouriteCity(atIndex: indexPath.row)
+        }else if currentPage == .recentSearch {
+            self.homeViewModel.homeCityReport = self.homeViewModel.fetchRecentSearchCity(atIndex: indexPath.row)
+        }
         
-        print("tapped Me at \(indexPath.row)")
+        self.delegate?.isHomePageContentFavourite()
+        self.delegate?.reloadHomePageData()
+        self.navigationController?.popViewController(animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -138,7 +168,7 @@ extension FavouriteTableViewController: UITableViewDelegate {
         return indexPath
     }
 }
-
+    
 extension FavouriteTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -169,7 +199,7 @@ extension FavouriteTableViewController: UITableViewDataSource {
         if currentPage == .favourites {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "favouriteCell", for: indexPath) as? favouriteCell {
                 cell.backgroundColor = .clear
-                
+                    
                 let city = homeViewModel.fetchFavouriteCity(atIndex: indexPath.row)
                 
                 cell.cityName.text = city.cityName
@@ -220,6 +250,20 @@ extension FavouriteTableViewController: UITableViewDataSource {
             cityWeatherList.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
+}
+
+extension FavouriteTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            
+            isSearching = false
+            
+        }else {
+            
+            isSearching = true
+            
+        }
+        self.cityWeatherList.reloadData()
+    }
 }
 

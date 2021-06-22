@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F46D74BA2681ACC400A4598F /* CoustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46D74B92681ACC400A4598F /* CoustomView.swift */; };
+		F46D74BD2681FE4B00A4598F /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46D74BC2681FE4B00A4598F /* Int+Extension.swift */; };
 		F4EEE8182671D5F5009E48E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE8172671D5F5009E48E0 /* AppDelegate.swift */; };
 		F4EEE81A2671D5F5009E48E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE8192671D5F5009E48E0 /* SceneDelegate.swift */; };
 		F4EEE81C2671D5F5009E48E0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEE81B2671D5F5009E48E0 /* HomeViewController.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F46D74B92681ACC400A4598F /* CoustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoustomView.swift; sourceTree = "<group>"; };
+		F46D74BC2681FE4B00A4598F /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		F4EEE8142671D5F5009E48E0 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4EEE8172671D5F5009E48E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4EEE8192671D5F5009E48E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				F4EEE82E2671EEE0009E48E0 /* UIColor+extension.swift */,
+				F46D74BC2681FE4B00A4598F /* Int+Extension.swift */,
 				F4EEE88426788D1F009E48E0 /* UIImage+Extension.swift */,
 				F4EEE88C2679B4F9009E48E0 /* String+extension.swift */,
 				F4EEE86A2677DBFA009E48E0 /* Date+Extension.swift */,
@@ -159,6 +164,7 @@
 				F4EEE8412675BFF1009E48E0 /* ToggleButton.swift */,
 				F4EEE860267761B4009E48E0 /* clearBackgroundWhiteFontButton.swift */,
 				F4EEE88126786ED5009E48E0 /* CoustomLabels.swift */,
+				F46D74B92681ACC400A4598F /* CoustomView.swift */,
 			);
 			path = "Coustom Classes";
 			sourceTree = "<group>";
@@ -256,9 +262,11 @@
 				F4EEE87B267869FB009E48E0 /* LoacationManager.swift in Sources */,
 				F4EEE8182671D5F5009E48E0 /* AppDelegate.swift in Sources */,
 				F4EEE861267761B4009E48E0 /* clearBackgroundWhiteFontButton.swift in Sources */,
+				F46D74BA2681ACC400A4598F /* CoustomView.swift in Sources */,
 				F4EEE83A26739577009E48E0 /* WeatherConditionCell.swift in Sources */,
 				F4EEE86826776C93009E48E0 /* favouriteCell.swift in Sources */,
 				F4EEE88226786ED5009E48E0 /* CoustomLabels.swift in Sources */,
+				F46D74BD2681FE4B00A4598F /* Int+Extension.swift in Sources */,
 				F4EEE8702677E574009E48E0 /* SearchPageViewController.swift in Sources */,
 				F4EEE81A2671D5F5009E48E0 /* SceneDelegate.swift in Sources */,
 				F4EEE82F2671EEE1009E48E0 /* UIColor+extension.swift in Sources */,

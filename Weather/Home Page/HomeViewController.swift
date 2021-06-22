@@ -75,6 +75,7 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
             }
         }
     }
+    
     @IBAction func homeButton(_ sender: Any) {
         self.menuView.isHidden = true
     }
@@ -96,6 +97,12 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
             self.homeViewModel.removeFromFavourite()
         }
     }
+    
+    @IBAction func tapGuestue(_ sender: Any) {
+        self.menuView.isHidden = true
+    }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationViewController = segue.destination as? FavouriteTableViewController {
@@ -119,16 +126,6 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
         if let destinationViewController = segue.destination as? SearchPageViewController {
             
             destinationViewController.homeViewModel = self.homeViewModel
-        }
-    }
-    
-    
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch: UITouch? = touches.first
-        if touch?.view != self.menuView {
-            self.menuView.isHidden = true
         }
     }
     
@@ -196,5 +193,8 @@ extension HomeViewController: FavouriteCheckProtocol {
         }
     }
     
-    
+    func reloadHomePageData() {
+        self.weatherReportRecieved()
+    }
+
 }

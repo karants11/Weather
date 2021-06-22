@@ -7,7 +7,7 @@
 
 import UIKit
 
-let weatherDiscriptionArray = ["Max-Min", "Humidity", "Pressure", "Discription"]
+let weatherDiscriptionArray = ["Max - Min", "Humidity", "Pressure", "Discription"]
 let weatherDiscriptionImageArray = [UIImage(named: "temperature"), UIImage(named: "humidity"), UIImage(named: "pressure"),UIImage(named: "slightrain")]
 
 enum SegueIdentifiers: String {
