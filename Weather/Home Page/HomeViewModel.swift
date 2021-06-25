@@ -17,7 +17,9 @@ class HomeViewModel: WeatherReportParsedProtocol {
     var homeCityReport = WeatherReport()
     var favourites = [String]()
     var recentSearches = [String]()
-    var filterdList = [String]()
+    
+    var favCopy = [String]()
+    var recentSearchCopy = [String]()
     
     weak var delegate: WeatherDataProtocol?
     
@@ -33,17 +35,13 @@ class HomeViewModel: WeatherReportParsedProtocol {
         return recentSearches.count
     }
     
-    var filteredListCount: Int {
-        return filterdList.count
-    }
-    
     var networkManager = NetworkManager()
     
     func fetchWeather(ofCityName: String) {
         
         networkManager.delegate = self
-        
-        if let weatherReport = weatherReports[ofCityName], (Int.getDateDiff(start: weatherReport.storedTime, end: Date()) <= 30) {
+        // (Int.getDateDiff(start: weatherReport.storedTime ?? Date(), end: Date()) <= 1800)
+        if let weatherReport = weatherReports[ofCityName], (weatherReport.storedTime - Date().millisecondsSince1970 <= (30 * 60 * 1000)) {
             self.homeCityReport = weatherReport
         }else {
             networkManager.fetchWeather(url: String.urlFromCityName(cityName: ofCityName))
@@ -79,14 +77,18 @@ class HomeViewModel: WeatherReportParsedProtocol {
         
         self.homeCityReport = weatherReport
         self.weatherReports[homeCityReport.cityName] = weatherReport
+        
+        self.saveWeatherReport()
 
         self.delegate?.weatherReportRecieved()
+        
     }
     
     func addCurrentCityToFavourite() {
         let city: String = homeCityReport.cityName
         if !favourites.contains(city) {
             favourites.append(city)
+            favCopy.append(city)
             //print(favCount)
         }
     }
@@ -97,6 +99,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
         if favourites.contains(city) {
             guard let removeIndex = favourites.firstIndex(of: city) else { return }
             favourites.remove(at: removeIndex)
+            favCopy.remove(at: removeIndex)
             //print(favCount)
         }
     }
@@ -105,6 +108,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
         
         if atIndex >= 0 && atIndex < favCount {
             favourites.remove(at: atIndex)
+            favCopy.remove(at: atIndex)
         }
     }
     
@@ -131,6 +135,7 @@ class HomeViewModel: WeatherReportParsedProtocol {
         let city: String = cityName
         if !recentSearches.contains(city) {
             recentSearches.append(city)
+            recentSearchCopy.append(city)
         }
     }
     
@@ -152,8 +157,85 @@ class HomeViewModel: WeatherReportParsedProtocol {
             let city: String = recentSearches[ofIndex]
             if !favourites.contains(city) {
                 favourites.append(city)
+                favCopy.append(city)
             }
         }
     }
     
+    func retriveFavourites() {
+        self.favourites = self.favCopy
+    }
+    
+    func retrieveRecentSearch() {
+        self.recentSearches = self.recentSearchCopy
+    }
+    
+    func clearRecentSearch() {
+        self.recentSearches.removeAll()
+        self.recentSearchCopy.removeAll()
+    }
+    
+    func clearFavourites() {
+        self.favourites.removeAll()
+        self.favCopy.removeAll()
+    }
+    
 }
+
+extension HomeViewModel {
+    
+    func accountStorePath() -> URL {
+        
+        return URL.weatherReportPath()
+    }
+    
+    func favouriteStorePath() -> URL {
+        
+        return URL.favouriteStorePath()
+    }
+    
+    func recentSearchStorePath() -> URL {
+        
+        return URL.recentSearchStorePath()
+    }
+    
+    func saveWeatherReport() {
+        do{
+            let accountData = try NSKeyedArchiver.archivedData(withRootObject: self.weatherReports, requiringSecureCoding: false)
+            let favouriteData = try NSKeyedArchiver.archivedData(withRootObject: self.favCopy, requiringSecureCoding: true)
+            let recentSearchData = try NSKeyedArchiver.archivedData(withRootObject: self.recentSearchCopy, requiringSecureCoding: true)
+            
+            try accountData.write(to: self.accountStorePath())
+            try favouriteData.write(to: self.favouriteStorePath())
+            try recentSearchData.write(to: self.recentSearchStorePath())
+            print(self.weatherReports.count)
+            print(self.favCopy.count)
+        }catch {
+            // in case of failure
+            print("unable to access the file or file does not exist")
+        }
+    }
+    
+    func loadWeatherReport() {
+        do {
+            print("url retrieved")
+            let weatherData = try Data(contentsOf: self.accountStorePath())
+            let favouriteData = try Data(contentsOf: self.favouriteStorePath())
+            let recentSearchData = try Data(contentsOf: self.recentSearchStorePath())
+            
+            if let weatherReports = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(weatherData) as? [String : WeatherReport],
+               let favouritesLoded = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(favouriteData) as? [String],
+               let recentSearchLoded = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(recentSearchData) as? [String] {
+                print(weatherReports.count)
+                self.weatherReports = weatherReports
+                self.favCopy = favouritesLoded
+                self.favourites = favouritesLoded
+                self.recentSearchCopy = recentSearchLoded
+                self.recentSearches = recentSearchLoded
+            }
+        }catch {
+            print("weather report not found")
+        }
+    }
+}
+

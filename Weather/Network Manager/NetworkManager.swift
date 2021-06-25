@@ -89,9 +89,9 @@ class NetworkManager {
            let humidity = main["humidity"] as? Int,
            let coordinates = weatherReport["coord"] as? [String : Any],
            let latitude = coordinates["lat"] as? Double,
-           let longitude = coordinates["lon"] as? Double{
+           let longitude = coordinates["lon"] as? Double {
             
-            let currentTime = Date()
+            let currentTime = Date().millisecondsSince1970
             
             finalWeatherReport = WeatherReport(cityName: name, temperature: temperature, minimumTemperature: minimumTemperature, maximumTemperature: maximumTemperature, weatherDescription: [String](), pressure: pressure, humidity: humidity, latitude: latitude, longitude: longitude, storedTime: currentTime)
             

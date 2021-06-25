@@ -7,8 +7,8 @@
 
 import Foundation
 
-class Coordinates {
-    
+class Coordinates: NSObject, NSCoding {
+
     var latitude: Double
     var longitude: Double
     
@@ -17,4 +17,20 @@ class Coordinates {
         self.longitude = longitude
     }
     
+    func encode(with coder: NSCoder) {
+        coder.encode(self.latitude, forKey: "latitude")
+        coder.encode(self.longitude, forKey: "longitude")
+    }
+    
+    required init?(coder: NSCoder) {
+        guard let latitude = coder.decodeDouble(forKey: "latitude") as? Double,
+              let longitude = coder.decodeDouble(forKey: "longitude") as? Double
+        else { return nil }
+        
+        self.latitude = latitude
+        self.longitude = longitude
+        
+    }
+    
+
 }

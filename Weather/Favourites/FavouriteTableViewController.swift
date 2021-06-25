@@ -15,9 +15,7 @@ protocol FavouriteCheckProtocol: AnyObject {
 class FavouriteTableViewController: UIViewController {
     
     weak var delegate: FavouriteCheckProtocol?
-    
-    var isSearching: Bool = false
-    
+        
     @IBOutlet weak var cityWeatherList: UITableView!
     
     @IBOutlet weak var tableTitle: tavleViewTitleLable!
@@ -53,11 +51,9 @@ class FavouriteTableViewController: UIViewController {
         self.tableTitle.text = tableTitleVar
         
         if currentPage == .favourites {
-            self.homeViewModel.filterdList = self.homeViewModel.favourites
             self.totalNumberOfFavourites.text = String.favouriteListDisplay(favCount: self.homeViewModel.favCount)
             
         }else if currentPage == .recentSearch {
-            self.homeViewModel.filterdList = self.homeViewModel.recentSearches
             self.totalNumberOfFavourites.text = String.recentListDisplay()
         }
         
@@ -79,15 +75,13 @@ class FavouriteTableViewController: UIViewController {
 
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default) { action in
-                //self.homeViewModel.filterdList.removeAll()  ///////////// <-------------
-                self.homeViewModel.favourites.removeAll()
+                self.homeViewModel.clearFavourites()
                 self.cityWeatherList.reloadData()
             })
             self.present(alert, animated: true)
             
         }else {
-            //self.homeViewModel.filterdList.removeAll()  ///////////// <-------------
-            self.homeViewModel.recentSearches.removeAll()
+            self.homeViewModel.clearRecentSearch()
             self.cityWeatherList.reloadData()
         }
 
@@ -254,16 +248,53 @@ extension FavouriteTableViewController: UITableViewDataSource {
 
 extension FavouriteTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
+        
+        switch currentPage {
+            case .favourites: do {
+                self.homeViewModel.favourites.removeAll()
+
+                if searchText == "" {
+                    
+                    self.homeViewModel.retriveFavourites()
+                    self.emptyImage.isHidden = true
+                    self.emptyIndicatorText.isHidden = true
+                    
+                    
+                }else {
+                    self.totalNumberOfFavourites.isHidden = false
+                    self.removeAllContentButton.isHidden = false
+                    
+                    for favourite in self.homeViewModel.favCopy {
+                        if favourite.lowercased().contains(searchText.lowercased()) {
+                            self.homeViewModel.favourites.append(favourite)
+                        }
+                    }
+                }
+                self.cityWeatherList.reloadData()
+            }
             
-            isSearching = false
-            
-        }else {
-            
-            isSearching = true
+            case .recentSearch: do {
+                self.homeViewModel.recentSearches.removeAll()
+
+                if searchText == "" {
+                    self.homeViewModel.retrieveRecentSearch()
+                    self.emptyImage.isHidden = true
+                    self.emptyIndicatorText.isHidden = true
+                    
+                }else {
+                    self.totalNumberOfFavourites.isHidden = false
+                    self.removeAllContentButton.isHidden = false
+                    
+                    for recentSearch in self.homeViewModel.recentSearchCopy {
+                        if recentSearch.lowercased().contains(searchText.lowercased()) {
+                            self.homeViewModel.recentSearches.append(recentSearch)
+                        }
+                    }
+                }
+                self.cityWeatherList.reloadData()
+            }
             
         }
-        self.cityWeatherList.reloadData()
     }
 }
 

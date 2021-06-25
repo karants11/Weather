@@ -42,6 +42,8 @@ class HomeViewController: UIViewController, WeatherDataProtocol, CLLocationManag
         
         self.homeViewModel.delegate = self
         
+        self.homeViewModel.loadWeatherReport()
+        
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
