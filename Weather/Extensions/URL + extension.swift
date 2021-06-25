@@ -33,4 +33,8 @@ extension URL {
         let filePath = documentFolder.appendingPathComponent("recentSearch.archive")
         return filePath
     }
+    
+    static func ABC() {
+        print("     ")
+    }
 }
